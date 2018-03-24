@@ -1,0 +1,16 @@
+<h4 class="modal-title" id="signupModalLabel">Sign up for Artifact Armory!</h4>
+      </div>
+      <div class="modal-body">
+        <form action="/sign-up" method="POST">
+          <div class="form-group">
+            <label for="sign-up-username">Username</label>
+            <input type="text" class="form-control" name="username" id="sign-up-username" required>
+          </div>
+          <div class="form-group">
+            <label for="sign-up-email">Email</label>
+            <input type="email" class="form-control" name="email" id="sign-up-email" required>
+          </div>
+          <div class="form-group">
+            <label for="sign-up-password">Password</label>
+            <input type="password" class="form-control" name="password" id="sign-up-password" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$" required>
+          </div>
