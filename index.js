@@ -44,14 +44,16 @@ app.use(function(err, req, res, next) {
 
 	// render the status page
 	res.status(err.status || 500);
-	res.render('error');
+	res.render(err.message);
 })
-
-module.exports = app;
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
+
+module.exports = app;
+
+
 // fs.readdirSync('./controllers').forEach(function (file) {
 // 	if(file.substr(-3) == '.js') {
 // 		route = require('./controllers/' + file);
