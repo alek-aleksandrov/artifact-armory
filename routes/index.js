@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var User = mongoose.model('User');
 var auth = require('../routes/auth');
+var bodyParser = require('body-parser');
 
 var index_controller = require('../controllers/index.js');
 var users_controller = require('../controllers/users.js');
