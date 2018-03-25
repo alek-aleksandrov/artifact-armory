@@ -6,6 +6,8 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
+    "express": "*",
+    "ejs": "*",
     "express-jwt": "^5.3.1",
     "express-validator": "^5.0.3",
     "fr": "^1.2.2",
