@@ -10,9 +10,9 @@ mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-
-
 var bodyParser = require('body-parser');
+require('./models/user');
+require('./config/passport');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var fs = require('fs');
