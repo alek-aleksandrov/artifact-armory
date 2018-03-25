@@ -1,50 +1,43 @@
 {
-  "name": "Artifact Armory",
+  "name": "artifact-armory",
   "version": "0.0.1",
-  "description": "A Node.js site to help Artifact fans and players",
-  "engines": {
-    "node": "9.8.0",
-    "npm": "5.6.0"
-  },
+  "description": "Artifact Fan Site",
   "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "test": "node test.js"
-  },
   "dependencies": {
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
-    "ejs": "^2.5.6",
-    "express": "^4.15.2",
     "express-jwt": "^5.3.1",
     "express-validator": "^5.0.3",
     "fr": "^1.2.2",
-    "http": "0.0.0",
+    "http": "^0.0.0",
     "jsonwebtoken": "^8.2.0",
     "mongodb": "^3.0.5",
-    "mongoose": "^5.0.11",
     "mongoose-unique-validator": "^2.0.0",
+    "mongoose": "^5.0.11",
+    "nodemon": "^1.17.2",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "process-env": "^1.1.0",
     "serve-favicon": "^2.4.5"
   },
-  "devDependencies": {
-    "nodemon": "^1.17.2",
-    "request": "^2.81.0",
-    "tape": "^4.7.0"
+  "devDependencies": {},
+  "scripts": {
+    "test": "node test.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/empty-god/artifact-armory"
+    "url": "git+https://github.com/empty-god/artifact-armory.git"
   },
   "keywords": [
-    "node",
-    "heroku",
-    "express",
-    "mongodb",
-    "ejs"
+    "Node",
+    "Artifact",
+    "EJS"
   ],
-  "license": "MIT"
+  "author": "Aleksandar Aleksandrov Brandon Belchar Ryan DeLeon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/empty-god/artifact-armory/issues"
+  },
+  "homepage": "https://github.com/empty-god/artifact-armory#readme"
 }
