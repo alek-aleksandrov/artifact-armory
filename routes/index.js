@@ -8,11 +8,11 @@ var auth = require('../routes/auth');
 var index_controller = require('../controllers/index.js');
 var users_controller = require('../controllers/users.js');
 
-// router.get('/', function(req, res) {
-//   res.render('index', { title: 'Artifact Armory' });
-// });
-
 router.use('/', require('./users'));
+
+router.get('/', function(req, res) {
+  res.render('index', { title: 'Artifact Armory' });
+});
 
 // router.post('/users', function(req, res, next){
 // 	var user = new User();
