@@ -1,6 +1,5 @@
 var express = require('express');
 var path = require('path');
-var cookieParser = require('cookie-parser');
 var app = express();
 var mongoose = require('mongoose');
 var mongoDB = process.env.MONGODB;
