@@ -4,6 +4,9 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var User = mongoose.model('User');
 var auth = require('../routes/auth');
+var bodyParser = require('body-parser');
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
+
 // Require controllers
 var index_controller = require('../controllers/index.js');
 var users_controller = require('../controllers/users.js');
@@ -24,21 +27,19 @@ router.post('/users/login', function(req, res, next){
 	if (!req.body.user.email) {
 		return res.status(422).json({errors: {email: "can't be blank"}});
 	}
-
 	if (!req.body.user.password) {
 		return res.status(422).json({errors: {password: "can't be blank"}});
 	}
 
 	passport.authenticate('local', {session: false}, function(err, user, info){
 		if (err) { return next(err); }
-		console.log('hello')
+		console.log(user)
 		if (user) {
-			console.log('user');
 			user.token = user.generateJWT();
-			return res.json({user: user.toAuthJSON()});//res.redirect('/');
+			return res.redirect('/');
+			//res.json({user: user.toAuthJSON()});
 		} 
 		else {
-			console.log('nope');
 			return res.status(422).json(info);
 		}
 	})(req, res, next);

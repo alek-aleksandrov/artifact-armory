@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Node build artifacts
 node_modules
 npm-debug.log
@@ -11,7 +10,7 @@ npm-debug.log
 # Docker
 Dockerfile
 docker-compose.yml
-=======
+
 # Logs
 logs
 *.log
@@ -70,5 +69,3 @@ typings/
 
 # dotenv environment variables file
 .env
-
->>>>>>> artifact-armory/master
