@@ -1,42 +1,53 @@
 var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var cookieParser = require('cookie-parser');
 var app = express();
+var path = require('path');
+//var favicon = require('serve-favicon');
 var mongoose = require('mongoose');
+var passport = require('passport');
+//var LocalStrategy = require('passport-local').Strategy;
+var flash = require('connect-flash');
+
+var morgan = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var session = require('express-session');
+
+
+// Mongo Setup
+
 var mongoDB = process.env.MONGODB;
 mongoose.connect(mongoDB);
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-var bodyParser = require('body-parser');
-require('./models/user');
-require('./config/passport');
-var index = require('./routes/index');
-var users = require('./routes/users');
-var fs = require('fs');
-var route;
+require('./config/passport')(passport);
 
-
-app.set('port', (process.env.PORT || 5000));
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(morgan('dev'));
 app.use(cookieParser());
-// views is directory for all template files
-app.use('/', index);
-app.use('/users', users);
+app.use(bodyParser());
 
-// app.use(function(req, res, next) {
-// 	var err = new Error('Not Found');
-// 	err.status = 404;
-// 	next(err);
-// });
+app.use(express.static(path.join(__dirname, 'public')));
+app.set('port', (process.env.PORT || 5000));
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+app.use(session({ secret: 'ilovescotchscotchyscotchscotch' }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
+require('./routes/routes')(app, passport);
+
+//routes
+
+require('./models/user');
+
+
+// views is directory for all template files
 
 //error handler
+
 app.use(function(err, req, res, next) {
 	// set locals on for error in development
 	res.locals.message = err.message;

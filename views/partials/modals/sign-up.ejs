@@ -1,7 +1,7 @@
 <h4 class="modal-title" id="signupModalLabel">Sign up for Artifact Armory!</h4>
       </div>
       <div class="modal-body">
-        <form action="/sign-up" method="POST">
+        <form action="/users" method="POST">
           <div class="form-group">
             <label for="sign-up-username">Username</label>
             <input type="text" class="form-control" name="username" id="sign-up-username" required>
@@ -12,5 +12,7 @@
           </div>
           <div class="form-group">
             <label for="sign-up-password">Password</label>
-            <input type="password" class="form-control" name="password" id="sign-up-password" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$" required>
+            <input type="password" class="form-control" name="password" id="sign-up-password" required>
           </div>
+          <input type="submit" class="btn btn-default" name="submit" value="Sign Up">
+        </form>   
