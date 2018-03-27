@@ -25,3 +25,16 @@
     .jumbotron .lang-logo img {
       max-width: 100%; }
 
+.articlePreview {
+	width:500px;
+	height:340px;
+}
+
+.articleExcerpt {
+	padding:10px;
+	margin:0;
+}
+
+.articlePreview img {
+	width:100%;
+}

@@ -12,6 +12,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
+if (process.platform == "win32") {
+	var dotenv = require('dotenv').config({path: path.join(__dirname, '.env')});
+}
 
 // Mongo Setup
 
@@ -39,9 +42,13 @@ app.use(flash());
 
 require('./routes/routes')(app, passport);
 
+var articles = require('./routes/articles');
+app.use('/articles', articles);
+
 //routes
 
 require('./models/user');
+require('./models/article');
 
 
 // views is directory for all template files

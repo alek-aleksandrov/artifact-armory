@@ -1,0 +1,9 @@
+<div class="articlePreview">
+	<img src="img/previewImage_ph.JPG">
+	<div class="articleExcerpt">
+		<h3><%- articles[i].title %></h3>
+		<p><%- articles[i].body %></p>
+		<% var urlTitle = "articles/" + articles[i].title.replace(/\s/g, '').toLowerCase() + "?id=" + articles[i].id; %>
+		<a href="<%- urlTitle %>">Read More</a>
+	</div>
+</div>
