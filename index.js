@@ -1,57 +1,51 @@
 var express = require('express');
+var app = express();
 var path = require('path');
-var favicon = require('serve-favicon');
+//var favicon = require('serve-favicon');
+var mongoose = require('mongoose');
+var passport = require('passport');
+//var LocalStrategy = require('passport-local').Strategy;
+var flash = require('connect-flash');
+
+var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var app = express();
+var session = require('express-session');
+
 
 // Mongo Setup
 
-var mongoose = require('mongoose');
 var mongoDB = process.env.MONGODB;
 mongoose.connect(mongoDB);
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+require('./config/passport')(passport);
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(morgan('dev'));
 app.use(cookieParser());
+app.use(bodyParser());
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.set('port', (process.env.PORT || 5000));
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+app.use(session({ secret: 'ilovescotchscotchyscotchscotch' }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
+require('./routes/routes')(app, passport);
+
 
 //routes
 
 require('./models/user');
-require('./config/passport');
-var index = require('./routes/index');
-app.use('/', index);
-var users = require('./routes/users');
-app.use('/users', users);
-var login = require('./routes/login');
-app.use('/login', login);
 
-var route;
 
 // views is directory for all template files
-
-app.set('port', (process.env.PORT || 5000));
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-app.use(express.static(path.join(__dirname, 'public')));
-
-// app.use(function(req, res, next) {
-// 	var err = new Error('Not Found');
-// 	err.status = 404;
-// 	next(err);
-// });
-
-// Top level page serve
-
-app.get('/', function(req, res) {
-  	res.render('index', { title: 'Artifact Armory' });
-});
-app.get('/login', function(req, res) {
-	res.render('pages/login', { title: 'Login' });
-})
 
 //error handler
 
