@@ -42,6 +42,7 @@ require('./routes/routes')(app, passport);
 //routes
 
 require('./models/user');
+//require('./models/profile');
 
 
 // views is directory for all template files
