@@ -4,7 +4,6 @@ var path = require('path');
 //var favicon = require('serve-favicon');
 var mongoose = require('mongoose');
 var passport = require('passport');
-//var LocalStrategy = require('passport-local').Strategy;
 var flash = require('connect-flash');
 
 var morgan = require('morgan');
@@ -42,7 +41,7 @@ require('./routes/routes')(app, passport);
 //routes
 
 require('./models/user');
-//require('./models/profile');
+require('./models/profile');
 
 
 // views is directory for all template files

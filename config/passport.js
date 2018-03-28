@@ -1,5 +1,6 @@
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
+var Profile = require('../models/profile');
 
 module.exports = function(passport) {
 
@@ -59,12 +60,20 @@ module.exports = function(passport) {
 						newUser.local.username = req.body.username;
 						newUser.local.email = email;
 						newUser.local.password = newUser.generateHash(password);
-						console.log(req.body);
+						console.log(newUser);
 						// save the user 
 						newUser.save(function(err) {
-							if (err)
-								throw err;
+							if (err) throw err;
+
+							var newProfile = new Profile();
+							newProfile.user = newUser._id;
+
+							newProfile.save(function(err) {
+								if (err) throw err;
+							});
+
 							return done(null, newUser);
+
 		             	});
 					}
 				})

@@ -1,3 +1,5 @@
+var User = require('../models/user');
+var Profile = require('../models/profile');
 module.exports = function(app, passport) {
 	
 	// home
@@ -6,6 +8,10 @@ module.exports = function(app, passport) {
 			res.locals.user = req.user;
 		}
 		res.render('index');
+	});
+
+	app.get('/not-found', function(req, res) {
+		res.render('not-found');
 	});
 
 	//login
@@ -45,10 +51,27 @@ module.exports = function(app, passport) {
 		res.redirect('/profile/'+userid);
 	});
 
+	//Probably should clean this up
 	app.get('/profile/:id', function(req, res) {
-		res.render('profile', {
-			user : req.user // will have to write a middleware that gets the profile by usrname since its unique
+		var username = req.params.id;
+		var user = getUserByUsername(username, function(err, user) {
+			if (err) return next(err);
+			if (user) {
+				var profile = getProfileByUsernameId(user._id, function(err, profile) {
+					if (err) return next(err);
+					if (profile) {
+						res.render('profile', {
+							user : user,
+							profile: profile
+						});
+					}
+					else {
+						res.redirect('/not-found');
+					}
+				});
+			}
 		});
+
 	});
 
 	// create profile edit info page
@@ -56,6 +79,16 @@ module.exports = function(app, passport) {
 
 	// post edited info page
 	// app.post('/profile/:id/edit', isLoggedIn, function(req,res) {});
+
+
+	// Potential error handler specifically for production
+	// app.use(function(err, req, res, next) {
+	//   res.status(err.status || 500);
+	//   res.render('error', {
+	//     message: err.message,
+	//     error: {}
+	//   });
+	// });
 
 	//logout
 	app.get('/logout', function(req,res) {
@@ -76,4 +109,31 @@ function isLoggedIn(req, res, next) {
 	}
 
 	res.redirect('/');
+}
+function getUserByUsername(username, done) {
+	User.findOne({'local.username': username}, function(err, user) {
+		if (err) {
+			return done(err);
+		}
+		if (user) {
+			return done(null, user);
+		}
+		else {
+			return done(null);
+		}
+	});
+}
+function getProfileByUsernameId(profile, done) {
+	Profile.findOne({'user': profile}, function(err, profile) {
+		if (err) {
+			return done(err);
+		}
+		if (profile) {
+			console.log(profile);
+			return done(null, profile);
+		}
+		else {
+			return done(null);
+		}
+	});
 }

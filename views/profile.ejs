@@ -10,6 +10,7 @@
 
 		<div class="page-header text-center">
 			<h1><span class="fa fa-anchor"></span> Profile</h1>
+			<a href="/profile/edit" class="btn btn-default btn-sm">Edit Profile</a>
 			<a href="/logout" class="btn btn-default btn-sm">Logout</a>
 		</div>
 
@@ -20,10 +21,10 @@
 					<h3><span class="fa fa-user"></span> Local</h3>
 
 						<p>
-							<strong>id</strong>: <%= user._id %><br>
 							<strong>username</strong>: <%= user.local.username %><br>
-							<strong>email</strong>: <%= user.local.email %><br>
-							<strong>password</strong>: <%= user.local.password %>
+							<strong>Profile Image</strong>: <%= profile.image %><br>
+							<strong>Profile Bio</strong>: <%= profile.bio %><br>
+							<strong>Twitch URL</strong>: <%= profile.twitchUrl %>
 						</p>
 				</div>
 			</div>
