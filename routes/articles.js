@@ -9,11 +9,23 @@ var router = express.Router();
 //];
 
 router.get('/', function(req, res, next) {
-	var arts;
-	Article.find({}, function(err, results) {
-		console.log(results);
-		res.render('articles', { title: 'Articles', articles: results});
-	});
+	var id = req.query.id;
+	
+	if(id == null)
+	{
+		Article.find({}, function(err, results) {
+			console.log(results);
+			res.render('articles', { title: 'Articles', articles: results});
+		});
+	}else{
+		Article.findOne({ 'id' : id}, function(err, result){
+			res.render('article', { title: result.title, article: result});
+		});
+	}
+});
+
+router.get('/newarticle', function(req, res, next){
+	res.render('newarticle');
 });
 
 router.get('/*', function(req, res, next) {

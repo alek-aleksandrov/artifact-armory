@@ -12,6 +12,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
+// Required for Brandon to work on windows
 if (process.platform == "win32") {
 	var dotenv = require('dotenv').config({path: path.join(__dirname, '.env')});
 }

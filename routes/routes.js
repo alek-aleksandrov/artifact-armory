@@ -10,6 +10,31 @@ module.exports = function(app, passport) {
 		// render the page and pass flash info
 		res.render('login', { message: req.flash('loginMessage') });
 	});
+	
+	app.get('/newarticle', function(req, res) {
+		res.render('newarticle', { message: req.flash('responseMessage') });
+	});
+	
+	app.post('/newarticle', function(req, res) {
+		var title = req.body.title,
+			body = req.body.body,
+			excerpt = req.body.excerpt,
+			banner = req.body.banner;
+		console.log(req.body);
+		//check if data exists
+		if(title == null || body == null || excerpt == null || banner == null)
+		{
+			req.flash('responseMessage', 'gay');
+			res.redirect('/newarticle');
+		}
+		
+		//check if data is empty
+		if(title == "" || body == "" || excerpt == "" || banner == "")
+		{
+			req.flash('responseMessage', 'gayer');
+			res.redirect('/newarticle');
+		}
+	});
 
 	//process login form
 	app.post('/login', passport.authenticate('local-login', {
@@ -54,5 +79,6 @@ function isLoggedIn(req, res, next) {
 		return next();
 	}
 
-	res.redirect('/');
+	req.flash('loginMessage', 'login mf');
+	res.redirect('/login');
 }

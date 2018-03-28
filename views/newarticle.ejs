@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<% include partials/header %>
+</head>
+<body>
+
+	<% include partials/nav %>
+	
+	<div class='container'>
+		<div class="col-sm-8 col-sm-offset-2">
+			<!-- show any messages that come back with authentication -->
+			<% if (message.length > 0) { %>
+				<div class="alert alert-danger"><%= message %></div>
+			<% } %>
+			<form action="/newarticle" method="post">
+			  <div class="form-group">
+				<label for="title">Title:</label>
+				<input type="text" class="form-control" id="title" name="title">
+			  </div>
+			  <div class="form-group">
+				<label for="body">Body:</label>
+				<textarea class="form-control" rows="20" id="body" name="body"></textarea>
+			  </div>
+			  <div class="form-group">
+				<label for="excerpt">Excerpt:</label>
+				<textarea class="form-control" rows="5" id="excerpt" name="excerpt"></textarea>
+			  </div>
+			  <div class="form-group">
+				<label for="banner">Banner Image</label>
+   				<input type="file" class="form-control" id="banner" name="banner">
+			  </div>  
+			  <button type="submit" class="btn btn-default">Submit</button>
+			</form>
+		</div>
+	</div>
+
+	<% include partials/modal %>
+
+	<% include partials/footer %>
+
+</body>
+</html>
