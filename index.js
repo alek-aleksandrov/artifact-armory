@@ -11,7 +11,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
-
 // Mongo Setup
 
 var mongoDB = process.env.MONGODB;

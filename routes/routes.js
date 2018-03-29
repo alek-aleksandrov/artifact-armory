@@ -1,5 +1,6 @@
 var User = require('../models/user');
 var Profile = require('../models/profile');
+var profileController = require('../controllers/profileController');
 module.exports = function(app, passport) {
 	
 	// home
@@ -10,7 +11,7 @@ module.exports = function(app, passport) {
 		res.render('index');
 	});
 
-	app.get('/not-found', function(req, res) {
+	app.get('/not-found', isLoggedInSafe, function(req, res) {
 		res.render('not-found');
 	});
 
@@ -46,22 +47,23 @@ module.exports = function(app, passport) {
 	}));
 
 	//profile
-	app.get('/profile', isLoggedIn, function(req, res) {
+	app.get('/profile', function(req, res) {
 		var userid = req.user.local.username;
 		res.redirect('/profile/'+userid);
 	});
 
 	//Probably should clean this up
-	app.get('/profile/:id', function(req, res) {
+	app.get('/profile/:id', isAuthenticatedProfile, function(req, res) {
 		var username = req.params.id;
 		var user = getUserByUsername(username, function(err, user) {
 			if (err) return next(err);
 			if (user) {
+				console.log(user._id);
 				var profile = getProfileByUsernameId(user._id, function(err, profile) {
 					if (err) return next(err);
 					if (profile) {
 						res.render('profile', {
-							user : user,
+							username : user.local.username, // change for security reasons
 							profile: profile
 						});
 					}
@@ -70,15 +72,16 @@ module.exports = function(app, passport) {
 					}
 				});
 			}
+			else {res.redirect('/not-found');}
 		});
-
 	});
 
-	// create profile edit info page
-	// app.get('/profile/:id/edit', isLoggedIn, function(req, res) {});
+	app.get('/profile/:id/edit', isLoggedIn, function(req, res) {
+		res.render('edit');
+	});
 
 	// post edited info page
-	// app.post('/profile/:id/edit', isLoggedIn, function(req,res) {});
+	//app.post('/profile/:id/edit', profileController.updateProfile(req, res));
 
 
 	// Potential error handler specifically for production
@@ -110,6 +113,28 @@ function isLoggedIn(req, res, next) {
 
 	res.redirect('/');
 }
+function isLoggedInSafe(req, res, next) {
+
+	// if user is authenticated in session
+	if (req.isAuthenticated()) {
+		res.locals.user = req.user.local.username;
+		return next();
+	}
+	else {return next();}
+}
+function isAuthenticatedProfile(req, res, next) {
+	if (req.isAuthenticated()) {
+		if (req.user.local.username === req.params.id) {
+			res.locals.ownProfile = true;
+		}
+		res.locals.user = req.user.local.username;
+		return next();
+		}
+	else {
+		res.locals.ownProfile = false;
+		return next();
+	}
+}
 function getUserByUsername(username, done) {
 	User.findOne({'local.username': username}, function(err, user) {
 		if (err) {
@@ -129,7 +154,6 @@ function getProfileByUsernameId(profile, done) {
 			return done(err);
 		}
 		if (profile) {
-			console.log(profile);
 			return done(null, profile);
 		}
 		else {
