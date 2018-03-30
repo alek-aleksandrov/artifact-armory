@@ -7,13 +7,17 @@
 
 	<% include partials/nav %>
 
-	<% for(i = 0; i < articles.length; i++) { %>
-		<% include partials/article-preview %>
-	<% } %>
+	<div class="container">
+		<div class="col-sm-8 col-sm-offset-2">
+			<% for(i = 0; i < articles.length; i++) { %>
+				<% include partials/article-preview %>
+			<% } %>
 
-	<% include partials/modal %>
+			<% include partials/modal %>
 
-	<% include partials/footer %>
+			<% include partials/footer %>
+		</div>
+	</div>
 
 </body>
 </html>

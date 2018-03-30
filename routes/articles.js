@@ -10,15 +10,20 @@ var router = express.Router();
 
 router.get('/', function(req, res, next) {
 	var id = req.query.id;
-	
+
 	if(id == null)
 	{
-		Article.find({}, function(err, results) {
-			console.log(results);
+		Article.find({}, "title excerpt", function(err, results) {
+			if(err)
+				throw err;
 			res.render('articles', { title: 'Articles', articles: results});
 		});
-	}else{
-		Article.findOne({ 'id' : id}, function(err, result){
+	}
+	else{
+		Article.findOne({'_id': id}, function(err, result){
+			console.log(result);
+			if(err)
+				throw err;
 			res.render('article', { title: result.title, article: result});
 		});
 	}
@@ -28,11 +33,14 @@ router.get('/newarticle', function(req, res, next){
 	res.render('newarticle');
 });
 
-router.get('/*', function(req, res, next) {
-	var id = req.query.id;
-	var art = arts[id];
-	
-	res.render('article', { title: art.title, article: art});
-});
+// router.get('/*', function(req, res, next) {
+// 	var id = req.query.id;
+
+// 	Article.findOne({'id' : id}, function(err, result) {
+// 		if(err)
+// 			throw err;
+// 		res.render('article', { title: result.title, article: result});
+// 	});
+// });
 
 module.exports = router;

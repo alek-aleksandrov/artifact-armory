@@ -6,8 +6,11 @@ var	articleSchema =  mongoose.Schema({
 	banner: String,
 	body: String,
 	excerpt: String,
-	date: Date,
-	categories: [String]
+	categories: [String],
+	created: {
+		    type : Date,
+		    default : Date.now
+	}
 });
 
 module.exports = mongoose.model('Article', articleSchema);
