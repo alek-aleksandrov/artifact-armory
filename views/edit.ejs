@@ -11,7 +11,7 @@
 		<div class="row">
 			<div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1 col-xs-12">
 				<h3 class="text-center">Edit Your Profile</h3>
-				<form action="/edit" method="POST">
+				<form action="/profile/<%= locals.user %>/edit/update" method="POST">
 					<div class="form-group row">
 						<label>Edit Your Profile Image</label>
 						<input type="file" class="form-control" name="profile_picture" class="">
