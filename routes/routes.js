@@ -1,9 +1,9 @@
 var User = require('../models/user');
 var Profile = require('../models/profile');
 var profileController = require('../controllers/profileController');
+var multer = require('multer');
 const { body,validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
-var multer = require('multer');
 
 module.exports = function(app, passport) {
 	
@@ -86,30 +86,11 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/profile/:id/edit', isLoggedIn, function(req, res) {
-		res.render('edit');
+		res.render('edit', { message: req.flash('profileEditMessage') });
 	});
 
 	// post edited info page
-	app.post('/profile/:id/edit/update', isLoggedIn, function(req, res) {
-
-		sanitizeBody('profile_bio').trim().escape(),
-		sanitizeBody('twitch_url').trim().escape()
-
-		var twitchUrlNew = req.body.twitchUrl;
-		var profileBioNew = req.body.profileBio;
-		var imageNew = req.body.profile_picture;
-
-		
-
-		var updateInfo = {twitchUrl: twitchUrlNew, profileBio: profileBioNew, image: imageNew};
-
-		console.log(updateInfo);
-		Profile.update({'user': req.user._id}, {$set: {twitchUrl: 'https://www.google.com'}}, function(err, profile) {
-			if (err) return handleError(err);
-			res.redirect('/profile');
-		});
-	});
-
+	app.post('/profile/:id/edit/update', isLoggedIn, profileController.profileUpdate);
 
 	// Potential error handler specifically for production
 	// app.use(function(err, req, res, next) {
