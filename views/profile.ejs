@@ -11,7 +11,8 @@
 		<div class="page-header text-center">
 			<h1><span class="fa fa-anchor"></span> Profile</h1>
 			<% if (locals.ownProfile) { %>
-				<a href="/profile/<%= username %>/edit" class="btn btn-default btn-sm">Edit Profile</a>
+				<a href="/profile/<%= username %>/editImage" class="btn btn-default btn-sm">Edit Profile Image</a>
+				<a href="/profile/<%= username %>/editBio" class="btn btn-default btn-sm">Edit Profile Bio</a>
 				<a href="/logout" class="btn btn-default btn-sm">Logout</a>
 			<% } %>
 		</div>
@@ -21,7 +22,7 @@
 			<div class="col-sm-6">
 				<div class="well">
 					<h3><span class="fa fa-user"></span> Local</h3>
-
+						<img src="<%= profile.image %>" class="img-responsive" style="width: 500px; height: 500px;"/>
 						<p>
 							<strong>username</strong>: <%= username %><br>
 							<strong>Profile Image</strong>: <%= profile.image %><br>

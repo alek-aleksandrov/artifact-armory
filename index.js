@@ -10,9 +10,7 @@ var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-var AWS = require('aws-sdk');
-var multer = require('multer');
-var multerS3 = require('multer-s3');
+
 // Mongo Setup
 
 var mongoDB = process.env.MONGODB;
@@ -22,18 +20,16 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 require('./config/passport')(passport);
-AWS.config.loadFromPath('config.json');
 
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(bodyParser());
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static(__dirname + '/writable'));
 app.set('port', (process.env.PORT || 5000));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-
-var s3 = new AWS.S3();
 
 // var upload = multer({
 //     storage: multerS3({

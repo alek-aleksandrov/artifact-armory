@@ -1,9 +1,19 @@
 var User = require('../models/user');
 var Profile = require('../models/profile');
+var indexController = require('../controllers/index');
 var profileController = require('../controllers/profileController');
-var multer = require('multer');
 const { body,validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
+
+var multer  = require('multer');
+var uploads = multer({ dest: 'uploads/' });
+
+var cloudinary = require('cloudinary');
+cloudinary.config({ 
+ cloud_name: 'www-artifactarmory-com', 
+ api_key: '488794579157424', 
+ api_secret: 'U6ZP80SKXPh2RLDz9RmfRXwKqLI' 
+}); 
 
 module.exports = function(app, passport) {
 	
@@ -85,12 +95,33 @@ module.exports = function(app, passport) {
 		});
 	});
 
-	app.get('/profile/:id/edit', isLoggedIn, function(req, res) {
-		res.render('edit', { message: req.flash('profileEditMessage') });
+	app.get('/profile/:id/editbio', isLoggedIn, function(req, res) {
+		res.render('editBio', { message: req.flash('bioEditMessage') });
+	});
+
+	app.get('/profile/:id/editimage', isLoggedIn, function(req, res) {
+		res.render('editImage', { message: req.flash('imageEditMessage') });
 	});
 
 	// post edited info page
-	app.post('/profile/:id/edit/update', isLoggedIn, profileController.profileUpdate);
+	app.post('/profile/:id/edit/updateBio', isLoggedIn, profileController.profileUpdate);
+
+	app.post('/profile/:id/edit/updateImage', isLoggedIn, uploads.single('file'), function(req, res) {
+		var userid = req.user._id;
+		cloudinary.v2.uploader.upload(req.file.path, function(req, res) {
+			if (res.url) {
+				Profile.findOne({'user': userid}, function(err, profile) {
+					if (err) { return next(err); }
+					if (profile) {
+						Profile.findByIdAndUpdate(profile._id, {$set:{image:res.url}}, {new: true}, function (err, selectProfile) {
+							if (err) { return next(err); }
+						});
+					}
+				});
+			}
+		});
+		res.redirect('/profile');
+	});
 
 	// Potential error handler specifically for production
 	// app.use(function(err, req, res, next) {
@@ -110,9 +141,6 @@ module.exports = function(app, passport) {
 };
 
 
-var uploading = multer({
-	dest: __dirname + '../public/uploads',
-});
 
 //route middleware to make sure user is logged in
 
