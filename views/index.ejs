@@ -30,12 +30,20 @@
   </div>
 </div>
 <div class="container">
-    <div class="row">
-        <% var i = 0; %>
-        <% include partials/article-preview %>
-        <% var i = 1; %>
-        <% include partials/article-preview %>
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="article_feature_slider">
+        <div id="indicator3" class="article_feature_slide_indicator" onclick="alert('wow');"></div>
+        <div id="indicator2" class="article_feature_slide_indicator"></div>
+        <div id="indicator1" class="article_feature_slide_indicator"></div>
+        <div id="indicator0" class="article_feature_slide_indicator active"></div>
+      </div>
     </div>
+  </div>
+  <% var i = 0; %>
+  <% include partials/article-preview %>
+  <% var i = 1; %>
+  <% include partials/article-preview %>
 </div>
 <div class="container">
   <div class="row">
@@ -47,4 +55,5 @@
   <% include partials/footer %>
   
 </body>
+<script src="js/feature_slider.js"></script>
 </html>

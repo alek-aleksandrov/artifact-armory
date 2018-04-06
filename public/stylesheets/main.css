@@ -44,6 +44,8 @@ a.article_preview_link:hover {
 .article_preview_container {
 	width:100%;
 	height:150px;
+
+  margin-top:20px;
 }
 
 .article_preview_img_container {
@@ -67,4 +69,31 @@ a.article_preview_link:hover {
 
   display:inline-block;
   float:left;
+}
+
+.article_feature_slider {
+  width:100%;
+  height:250px;
+
+  background-image:url('http://via.placeholder.com/1170x250');
+  background-size:cover;
+  background-position:center;
+}
+
+.article_feature_slide_indicator {
+  width:10px;
+  height:10px;
+
+  margin-right:5px;
+  margin-top:10px;
+
+  position:relative;
+  float:right;
+
+  background-color:#333333;
+  border-radius:50%;
+}
+
+.article_feature_slide_indicator.active {
+  background-color:#999999;
 }
