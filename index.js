@@ -11,6 +11,14 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
+<<<<<<< HEAD
+=======
+// Required for Brandon to work on windows
+if (process.platform == "win32") {
+	var dotenv = require('dotenv').config({path: path.join(__dirname, '.env')});
+}
+
+>>>>>>> 9a272cd587e0aa2a8e6865fe62812ccae4c6c4e9
 // Mongo Setup
 
 var mongoDB = process.env.MONGODB;
@@ -49,10 +57,17 @@ app.use(flash());
 
 require('./routes/routes')(app, passport);
 
+var articles = require('./routes/articles');
+app.use('/articles', articles);
+
 //routes
 
 require('./models/user');
+<<<<<<< HEAD
 require('./models/profile');
+=======
+require('./models/article');
+>>>>>>> 9a272cd587e0aa2a8e6865fe62812ccae4c6c4e9
 
 
 // views is directory for all template files

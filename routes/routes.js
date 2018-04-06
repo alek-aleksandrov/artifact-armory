@@ -16,7 +16,9 @@ cloudinary.config({
 }); 
 
 module.exports = function(app, passport) {
-	
+
+	var Article = require('../models/article');
+
 	// home
 	app.get('/', function(req, res) {
 		if (req.user) {
@@ -36,6 +38,47 @@ module.exports = function(app, passport) {
 			res.locals.user = req.user;
 		}
 		res.render('login', { message: req.flash('loginMessage') });
+	});
+	
+	app.get('/newarticle', isLoggedIn, function(req, res) {
+		res.render('newarticle', { message: req.flash('responseMessage') });
+	});
+	
+	app.post('/newarticle', isLoggedIn, function(req, res) {
+		var title = req.body.title,
+			body = req.body.body,
+			excerpt = req.body.excerpt,
+			banner = req.body.banner;
+
+		//check if data exists
+		if(title == null || body == null || excerpt == null || banner == null)
+		{
+			req.flash('responseMessage', 'Something went wrong.');
+			res.redirect('/newarticle');
+			return;
+		}
+		
+		//check if data is empty
+		if(title == "" || body == "" || excerpt == "" || banner == "")
+		{
+			req.flash('responseMessage', 'No field can be empty.');
+			res.redirect('/newarticle');
+			return;
+		}
+
+		newArticle = new Article();
+
+		newArticle.title = title;
+		newArticle.author = "user";
+		newArticle.body = body;
+		newArticle.excerpt = excerpt;
+
+		newArticle.save(function(err) {
+			if (err)
+				throw err;
+        });
+
+		res.redirect('/articles');
 	});
 
 	//process login form
@@ -152,7 +195,8 @@ function isLoggedIn(req, res, next) {
 		return next();
 	}
 
-	res.redirect('/');
+	req.flash('loginMessage', 'login mf');
+	res.redirect('/login');
 }
 function isLoggedInSafe(req, res, next) {
 
@@ -202,4 +246,3 @@ function getProfileByUsernameId(profile, done) {
 		}
 	});
 }
-
