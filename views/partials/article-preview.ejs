@@ -1,9 +1,13 @@
-<div class="articlePreview">
-	<img src="img/previewImage_ph.JPG">
-	<div class="articleExcerpt">
-		<h3><%- articles[i].title %></h3>
-		<p><%- articles[i].excerpt %></p>
-		<% var urlTitle = "articles/" + "?id=" + articles[i].id; %>
-		<a href="<%- urlTitle %>">Read More</a>
-	</div>
+<% var urlTitle = "articles/" + "?id=" + articles[i].id; %>
+<div class="article_preview_container">
+	<a href="<%- urlTitle %>" class="article_preview_link">
+		<div class="article_preview_img_container">
+			<img src="img/previewImage_ph.JPG">
+		</div>
+		<div class="article_preview_text_container">
+			<h3><%- articles[i].title %></h3>
+			<p><%- articles[i].excerpt %></p>
+			<a href="<%- urlTitle %>">Read More</a>
+		</div>
+	</a>
 </div>
