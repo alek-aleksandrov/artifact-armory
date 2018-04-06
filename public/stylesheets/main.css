@@ -25,16 +25,46 @@
     .jumbotron .lang-logo img {
       max-width: 100%; }
 
-.articlePreview {
-	width:100%;
-	height:340px;
+.article_preview_link {
+  color:inherit;
+  text-decoration:none;
 }
 
-.articleExcerpt {
-	padding:10px;
+a.article_preview_link:link,
+a.article_preview_link:hover,
+a.article_preview_link:active {
+  color:inherit;
+  text-decoration:none;
+}
+
+a.article_preview_link:hover {
+  background-color:black;
+}
+
+.article_preview_container {
+	width:100%;
+	height:150px;
+}
+
+.article_preview_img_container {
+  width:30%;
+  height:150px;
+
+  display:inline-block;
+  float:left;
+
+  overflow:hidden;
+}
+
+.article_preview_text_container {
+  width:70%;
+  height:150px;
+
+	padding-left:20px;
 	margin:0;
-}
 
-.articlePreview img {
-	width:100%;
+  background-color:inherit;
+
+  display:inline-block;
+  float:left;
 }
