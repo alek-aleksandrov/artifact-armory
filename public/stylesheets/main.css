@@ -68,3 +68,26 @@ a.article_preview_link:hover {
   display:inline-block;
   float:left;
 }
+footer {
+  background-color: #222;
+  color: #FFF;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-top: 30px;
+}
+footer a {
+  color: #FFF;
+}
+footer #social-title {
+  display: inline-block;
+}
+footer ul {
+  list-style: none;
+  display: inline-block;
+  padding: 0;
+}
+footer ul li {
+  display: inline-block;
+  margin-left: 4px;
+  margin-right: 4px;
+}

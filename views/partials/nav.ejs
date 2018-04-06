@@ -5,36 +5,36 @@
         <a href="/">Artifact Armory</a>
       </li>
       <li class="active">
-        <a href="/"><span class="glyphicon glyphicon-home"></span> Home</a>
+        <a href="/"><span class="fas fa-home"></span> Home</a>
       </li>
       <li>
-        <a href="/"><span class="glyphicon glyphicon-bullhorn"></span> News</a>
+        <a href="/"><span class="fas fa-bullhorn"></span> News</a>
       </li>
       <li>
-        <a href="/"><span class="glyphicon glyphicon-screenshot"></span> Features</a>
+        <a href="/"><span class="fas fa-car"></span> Features</a>
       </li>
       <li>
-        <a href="/"><span class="glyphicon glyphicon-play"></span> How To Play</a>
+        <a href="/"><span class="fas fa-play"></span> How To Play</a>
       </li>
       <li>
-        <a href="/"><span class="glyphicon glyphicon-king"></span> Cards</a>
+        <a href="/"><span class="fas fa-chess"></span> Cards</a>
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <% if (locals.user) { %>
       <li class="navbar-right">
-        <a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+        <a href="/logout"><span class="fas fa-sign-out-alt"></span> Logout</a>
       </li>
       <li class="navbar-right">
-        <a href="/profile"><span class="glyphicon glyphicon-phone"></span> Your Profile</a>
+        <a href="/profile"><span class="far fa-user-circle"></span> Your Profile</a>
       </li>
       <% } else { %>
       <li class="navbar-right">
-        <a href="/login"><span class="glyphicon glyphicon-log-in"></span> Sign In</a>
+        <a href="/login"><span class="fas fa-sign-in-alt"></span> Sign In</a>
       </li>
       <li class="navbar-right" id="js-modal-action-sign-up">
         <!--data-toggle="modal" data-target="#signupModal"-->
-        <a href="/signup"><span class="glyphicon glyphicon-plus"></span> Register New Account</a>
+        <a href="/signup"><span class="fas fa-user-plus"></span> Register New Account</a>
       </li>
       <% } %>
     </ul>
