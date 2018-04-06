@@ -1,5 +1,6 @@
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
+var Profile = require('../models/profile');
 
 module.exports = function(passport) {
 
@@ -42,23 +43,46 @@ module.exports = function(passport) {
 				return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
 			} else {
 				// if all above conditions are false
-				var newUser = new User();
-
-				// set the local credentials
-				newUser.local.email = email;
-				newUser.local.password = newUser.generateHash(password);
-
-				// save the user 
-				newUser.save(function(err) {
+				
+				User.findOne({ 'local.username': req.body.username }, function(err, user) {
+					var regcheck = new RegExp("^[a-zA-Z0-9_-]*$");
 					if (err)
-						throw err;
-					return done(null, newUser);
-             });
+						return done(err);
+					if (user) {
+						return done(null, false, req.flash('signupMessage', 'That username is already taken, try another one.'));
+					}
+					else if (!(regcheck.test(req.body.username))) {
+						console.log(regcheck.test(req.body.username));
+						return done(null, false, req.flash('signupMessage', 'User name can only contain A-Z, 0-9, and - or _.'));
+					} else {
+						// set the local credentials
+						var newUser = new User();
+						newUser.local.username = req.body.username;
+						newUser.local.email = email;
+						newUser.local.password = newUser.generateHash(password);
+						console.log(newUser);
+						// save the user 
+						newUser.save(function(err) {
+							if (err) throw err;
+
+							var newProfile = new Profile();
+							newProfile.user = newUser._id;
+
+							newProfile.save(function(err) {
+								if (err) throw err;
+							});
+
+							return done(null, newUser);
+
+		             	});
+					}
+				})
+				
             }
 
         });    
 
-        });
+		});
 
     }));
 

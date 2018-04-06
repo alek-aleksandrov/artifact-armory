@@ -4,14 +4,12 @@ var path = require('path');
 //var favicon = require('serve-favicon');
 var mongoose = require('mongoose');
 var passport = require('passport');
-//var LocalStrategy = require('passport-local').Strategy;
 var flash = require('connect-flash');
 
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-
 
 // Mongo Setup
 
@@ -28,9 +26,21 @@ app.use(cookieParser());
 app.use(bodyParser());
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static(__dirname + '/writable'));
 app.set('port', (process.env.PORT || 5000));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
+// var upload = multer({
+//     storage: multerS3({
+//         s3: s3,
+//         bucket: 'artifactarmory',
+//         key: function (req, file, cb) {
+//             console.log(file);
+//             cb(null, file.Date.now()); //use Date.now() for unique file keys
+//         }
+//     })
+// });
 
 app.use(session({ secret: 'ilovescotchscotchyscotchscotch' }));
 app.use(passport.initialize());
@@ -42,6 +52,7 @@ require('./routes/routes')(app, passport);
 //routes
 
 require('./models/user');
+require('./models/profile');
 
 
 // views is directory for all template files

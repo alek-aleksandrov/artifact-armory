@@ -1,13 +1,19 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 var secret = process.env.SECRET_KEY;
+var Schema = mongoose.Schema;
 
 var	userSchema =  mongoose.Schema({
 	
 	local: {
 		username: String,
 		email: String,
-		password: String
+		password: String,
+		profile: {type: Schema.Types.ObjectId, ref: 'Profile'},
+		created: {
+		    type : Date,
+		    default : Date.now
+		  }
 	}
 });
 
