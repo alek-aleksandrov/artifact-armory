@@ -13,11 +13,13 @@
 				<div class="row">
 					<img src="<%= profile.image %>" class="img-responsive"/>
 					<h1><strong><%= username %></strong></h1>
-					<h4>Account Created: <%= created_date %>
-					<% if (locals.ownProfile) { %>
-						<a href="/profile/<%= username %>/editImage" class="btn btn-default btn-sm col-lg-12">Edit Profile Image</a>
-						<a href="/profile/<%= username %>/editBio" class="btn btn-default btn-sm col-lg-12">Edit Profile Bio</a>
-					<% } %>
+					<h4>Account Created: <%= created_date %></h4>
+					<div class="col-lg-12">
+						<% if (locals.ownProfile) { %>
+							<a href="/profile/<%= username %>/editImage" class="btn btn-default btn-sm col-lg-12">Edit Profile Image</a>
+							<a href="/profile/<%= username %>/editBio" class="btn btn-default btn-sm col-lg-12">Edit Profile Bio</a>
+						<% } %>
+					</div>
 				</div>
 			</div>
 			<div class="col-lg-5 col-lg-offset-1">
