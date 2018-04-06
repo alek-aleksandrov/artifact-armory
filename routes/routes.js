@@ -24,7 +24,14 @@ module.exports = function(app, passport) {
 		if (req.user) {
 			res.locals.user = req.user;
 		}
-		res.render('index');
+
+		Article.find({}, "title excerpt").limit(2).exec(function(err, results) {
+			if(err)
+				throw err;
+			res.render('index', { title: 'Home', articles: results});
+		});
+
+		//res.render('index');
 	});
 
 	app.get('/not-found', isLoggedInSafe, function(req, res) {
