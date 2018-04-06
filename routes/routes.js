@@ -133,7 +133,8 @@ module.exports = function(app, passport) {
 					if (profile) {
 						res.render('profile', {
 							username : user.local.username, // change for security reasons
-							profile: profile
+							created_date : user.local.created.toLocaleDateString('en-US'),
+							profile : profile
 						});
 					}
 					else {
