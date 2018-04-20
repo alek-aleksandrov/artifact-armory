@@ -57,6 +57,9 @@ require('./routes/routes')(app, passport);
 var articles = require('./routes/articles');
 app.use('/articles', articles);
 
+var cards = require('./routes/cards');
+app.use('/cards', cards);
+
 //routes
 
 require('./models/user');
